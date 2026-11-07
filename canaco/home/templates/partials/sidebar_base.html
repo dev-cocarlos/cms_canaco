@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{% block title %}Canaco{% endblock %}</title>
+
+  <!-- Favicons -->
+  <link href="{% static '/img/favicon.png' %}" rel="icon">
+  <link href="{% static '/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{% static '/css/main.css' %}" rel="stylesheet">
+  <style>
+    .panel-shell { padding: 40px 0; min-height: 75vh; background-color: #f8f9fa; }
+    /* flex-wrap: nowrap evita que el contenido baje, y min-width: 0 evita que las tablas desborden */
+    .panel-layout { display: flex; gap: 30px; align-items: flex-start; flex-wrap: nowrap; }
+    .panel-sidebar { width: 220px; flex-shrink: 0; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
+    .panel-content { flex-grow: 1; min-width: 0; }
+    
+    .panel-nav-link { color: #555; padding: 14px 20px; border-radius: 0 !important; border-bottom: 1px solid #f0f0f0; text-align: center; font-weight: 500; transition: 0.2s; }
+    .panel-nav-link:hover { background-color: #f8f9fa; color: #120be4; }
+    .panel-nav-link.active { background-color: #2276ba !important; color: #ffffff !important; }
+    .panel-logout-button { border-radius: 0; padding: 14px 20px; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; }
+    
+    .profile-card, .profile-edit-card { background: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); padding: 40px; width: 100%; max-width: 750px; margin: 0 auto; }
+    .profile-photo-wrap { text-align: center; margin-bottom: 30px; }
+    .profile-photo { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 4px solid #f0f0f0; }
+    .profile-photo-sm { width: 100px; height: 100px; }
+    
+    .profile-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 40px; max-width: 550px; margin: 0 auto 30px auto; }
+    .profile-field { display: flex; flex-direction: column; }
+    .profile-field span { font-weight: 700; color: #333; font-size: 0.9rem; }
+    .profile-field strong { font-weight: 400; color: #555; font-size: 1rem; margin-top: 4px; }
+    .profile-field-wide { grid-column: span 2; }
+    .profile-actions, .profile-form-actions { display: flex; justify-content: center; gap: 15px; margin-top: 25px; }
+    
+    .profile-form-row { display: grid; grid-template-columns: 120px 1fr; align-items: center; gap: 15px; margin-bottom: 15px; max-width: 550px; margin-left: auto; margin-right: auto; }
+    .profile-form-row label { font-weight: 700; color: #333; text-align: right; font-size: 0.9rem; }
+    .profile-form-row input, .profile-form-row select { width: 100%; padding: 8px 12px; border: 1px solid #ced4da; border-radius: 6px; }
+    
+    /* Reglas Responsivas: Oculta el sidebar en tablets y celulares */
+    @media (max-width: 991px) {
+      .panel-sidebar { display: none !important; }
+      .profile-grid { grid-template-columns: 1fr; }
+      .profile-field-wide { grid-column: span 1; }
+      .profile-form-row { grid-template-columns: 1fr; }
+      .profile-form-row label { text-align: left; }
+    }
+  </style>
+  {% block extra_css %}{% endblock extra_css %}
+</head>
+
+<body class="index-page">
+
+  {% include "partials/header.html" %}
+
+  <main id="main" class="panel-shell">
+    <div class="container">
+      <div class="panel-layout">
+        {% include "partials/sidebar.html" %}
+        <div class="panel-content flex-fill">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </main>
+
+  {% include "partials/footer.html" %}
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static '/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static '/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static '/vendor/aos/aos.js' %}"></script>
+  <script src="{% static '/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static '/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static '/vendor/glightbox/js/glightbox.min.js' %}"></script>
+
+  <!-- Main JS File -->
+  <script src="{% static '/js/main.js' %}"></script>
+  {% block extra_js %}{% endblock extra_js %}
+
+</body>
+</html>

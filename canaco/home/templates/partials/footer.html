@@ -1,0 +1,59 @@
+{% load static %}
+<footer id="footer" class="footer">
+
+  <div class="container footer-top">
+    <div class="row gy-4">
+      
+      <div class="col-lg-4 col-md-6 footer-about">
+        <a href="{% url 'home:index' %}" class="logo d-flex align-items-center">
+          <span class="sitename">Canaco</span>
+        </a>
+        <div class="footer-contact pt-3">
+          <p>Muy muy lejos, detrás de las montañas de palabras, lejos de los países Vokalia y Consonantia, viven los textos ciegos.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 footer-links">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#">Sobre nosotros</a></li>
+          <li><a href="#">Servicios</a></li>
+          <li><a href="#">Visión</a></li>
+          <li><a href="#">Misión</a></li>
+          <li><a href="#">Términos</a></li>
+          <li><a href="#">Privacidad</a></li>
+        </ul>
+      </div>
+
+      <!-- Entradas Recientes Dinámicas integradas en la cuadrícula -->
+      <div class="col-lg-4 col-md-12 footer-links">
+        <h4>Entradas Recientes</h4>
+        <ul class="list-unstyled">
+          {% for noticia in global_recientes %}
+            <li class="mb-3">
+              <a href="{% url 'home:noticia_detalle' noticia.id %}" class="d-flex align-items-center text-decoration-none">
+                {% if noticia.imagen_portada %}
+                  <img src="{{ noticia.imagen_portada.display_url }}" alt="{{ noticia.titulo }}" class="me-3 rounded" style="width: 70px; height: 70px; object-fit: cover;">
+                {% else %}
+                  <img src="{% static '/img/blog/blog-post-1.webp' %}" alt="{{ noticia.titulo }}" class="me-3 rounded" style="width: 70px; height: 70px; object-fit: cover;">
+                {% endif %}
+                <div>
+                  <h6 class="mb-1 text-dark" style="font-size: 0.95rem;">{{ noticia.titulo }}</h6>
+                  <span class="text-muted small">{{ noticia.createdat|date:"d M Y" }}</span>
+                </div>
+              </a>
+            </li>
+          {% empty %}
+            <li><span class="text-muted">No hay noticias recientes.</span></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container copyright text-center mt-4">
+    <p>© <span>Copyright</span> <strong class="px-1 sitename">Canaco</strong> <span>Todos los derechos reservados</span></p>
+  </div>
+
+</footer>

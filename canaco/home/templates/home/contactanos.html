@@ -1,0 +1,79 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %}Contáctanos{% endblock %}
+
+{% block content %}
+<main class="main">
+  <section class="section">
+    <div class="container" data-aos="fade-up">
+      
+      <div class="row align-items-center justify-content-center mb-5">
+        <div class="col-lg-8 text-center">
+          <h2 class="posts-entry-title mb-3">Contáctanos</h2>
+          <p class="text-muted">¿Tienes alguna duda o sugerencia? Envíanos un mensaje y nos pondremos en contacto contigo lo antes posible.</p>
+        </div>
+      </div>
+
+      <div class="row gy-5 justify-content-center">
+        <!-- Información de Contacto -->
+        <div class="col-lg-4">
+          <div class="info-item d-flex mb-4">
+            <i class="bi bi-geo-alt fs-2 text-danger me-3"></i>
+            <div>
+              <h4 class="fw-bold mb-1 h5">Ubicación</h4>
+              <p class="text-muted mb-0">Av. Altos Hornos, Colonia Indeco, Villahermosa, Tabasco 86017</p>
+            </div>
+          </div>
+
+          <div class="info-item d-flex mb-4">
+            <i class="bi bi-envelope fs-2 text-danger me-3"></i>
+            <div>
+              <h4 class="fw-bold mb-1 h5">Correo Electrónico</h4>
+              <p class="text-muted mb-0">contacto@canaco.com</p>
+            </div>
+          </div>
+
+          <div class="info-item d-flex">
+            <i class="bi bi-phone fs-2 text-danger me-3"></i>
+            <div>
+              <h4 class="fw-bold mb-1 h5">Teléfono</h4>
+              <p class="text-muted mb-0">+52 993 123 4567</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulario -->
+        <div class="col-lg-8">
+          <div class="card shadow-sm border-0 p-4 p-md-5 rounded-4 bg-white">
+            <form method="POST">
+              {% csrf_token %}
+              <div class="row gy-4">
+                <div class="col-md-6">
+                  <label for="nombre" class="form-label fw-semibold">Nombre</label>
+                  <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Tu nombre completo" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="email" class="form-label fw-semibold">Correo</label>
+                  <input type="email" name="email" id="email" class="form-control" placeholder="tucorreo@ejemplo.com" required>
+                </div>
+                <div class="col-md-12">
+                  <label for="asunto" class="form-label fw-semibold">Asunto</label>
+                  <input type="text" name="asunto" id="asunto" class="form-control" placeholder="Motivo de tu mensaje" required>
+                </div>
+                <div class="col-md-12">
+                  <label for="mensaje" class="form-label fw-semibold">Mensaje</label>
+                  <textarea name="mensaje" id="mensaje" rows="5" class="form-control" placeholder="Escribe aquí tu mensaje..." required></textarea>
+                </div>
+                <div class="col-md-12 text-center mt-4">
+                  <button type="submit" class="btn btn-danger px-5 py-2 text-uppercase fw-semibold">Enviar Mensaje</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+{% endblock content %}

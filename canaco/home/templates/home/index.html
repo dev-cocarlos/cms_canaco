@@ -1,12 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initialscale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1> Estas en la página index bienvenidos</h1>
-</body>
-</html>
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<main class="main">
+
+  <!-- ================= CAROUSEL HERO SECTION ================= -->
+  {% if slider %}
+  <section id="blog-hero-carousel" class="p-0 mb-5">
+    <div id="mainHeroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+      
+      <!-- Indicadores -->
+      <div class="carousel-indicators">
+        {% for noticia in slider %}
+          <button type="button" data-bs-target="#mainHeroCarousel" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-current="{% if forloop.first %}true{% endif %}" aria-label="Slide {{ forloop.counter }}"></button>
+        {% endfor %}
+      </div>
+
+      <!-- Imágenes del Carrusel -->
+      <div class="carousel-inner">
+        {% for noticia in slider %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="5000">
+            <a href="{% url 'home:noticia_detalle' noticia.id %}">
+              {% if noticia.imagen_portada %}
+                <img src="{{ noticia.imagen_portada.display_url }}" class="d-block w-100" style="height: 60vh; object-fit: cover; filter: brightness(0.65);" alt="{{ noticia.titulo }}">
+              {% else %}
+                <img src="{% static '/img/blog/blog-post-3.webp' %}" class="d-block w-100" style="height: 60vh; object-fit: cover; filter: brightness(0.65);" alt="{{ noticia.titulo }}">
+              {% endif %}
+            </a>
+            
+            <!-- Contenido sobre la imagen -->
+            <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 pb-0">
+              <div class="post-meta text-white mb-2" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.8);">
+                <span class="date me-3"><i class="bi bi-calendar3"></i> {{ noticia.createdat|date:"d M Y" }}</span>
+                <span class="category"><i class="bi bi-tag-fill"></i> {% if noticia.categoria %}{{ noticia.categoria.nombre }}{% else %}Sin categoría{% endif %}</span>
+              </div>
+              <h2 class="text-white fw-bold mb-3 px-3" style="text-shadow: 2px 2px 6px rgba(0,0,0,0.8); max-width: 800px;">
+                <a href="{% url 'home:noticia_detalle' noticia.id %}" class="text-white text-decoration-none">{{ noticia.titulo }}</a>
+              </h2>
+              {% if noticia.resumen %}
+                <p class="text-light d-none d-md-block" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.8); max-width: 700px;">
+                  {{ noticia.resumen|truncatewords:25 }}
+                </p>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Controles Prev/Next -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#mainHeroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#mainHeroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- ================= NOTICIAS RECIENTES ================= -->
+  <section id="latest-posts" class="latest-posts section pt-2">
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Noticias recientes</h2>
+      <div><span>Explora nuestras</span> <span class="description-title">Noticias recientes</span></div>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="row gy-4">
+        {% for noticia in publicaciones %}
+          <div class="col-lg-4 col-md-6">
+            <article class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+              <div class="post-img position-relative">
+                {% if noticia.imagen_portada %}
+                  <img src="{{ noticia.imagen_portada.display_url }}" alt="{{ noticia.titulo }}" class="img-fluid w-100" style="height: 220px; object-fit: cover;">
+                {% else %}
+                  <img src="{% static '/img/blog/blog-post-1.webp' %}" alt="{{ noticia.titulo }}" class="img-fluid w-100" style="height: 220px; object-fit: cover;">
+                {% endif %}
+                <span class="position-absolute top-0 end-0 bg-danger text-white px-3 py-1 m-3 rounded-pill small fw-semibold">
+                  {% if noticia.categoria %}{{ noticia.categoria.nombre }}{% else %}General{% endif %}
+                </span>
+              </div>
+              <div class="card-body p-4 d-flex flex-column">
+                <h3 class="title h5 mb-3 fw-bold">
+                  <a href="{% url 'home:noticia_detalle' noticia.id %}" class="text-dark text-decoration-none stretched-link">{{ noticia.titulo }}</a>
+                </h3>
+                <p class="text-muted small flex-grow-1">{{ noticia.resumen|truncatewords:18 }}</p>
+                <div class="d-flex align-items-center justify-content-between mt-3 pt-3 border-top">
+                  <div class="post-meta text-muted small">
+                    <span><i class="bi bi-calendar-event me-1"></i> {{ noticia.createdat|date:"d M Y" }}</span>
+                  </div>
+                  <div class="text-muted small">
+                    <i class="bi bi-eye me-1"></i> {{ noticia.visitas }}
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        {% empty %}
+          <div class="col-12 text-center py-5">
+            <h4 class="text-muted">No hay noticias publicadas todavía.</h4>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+</main>
+{% endblock content %}

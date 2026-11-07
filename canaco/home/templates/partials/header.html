@@ -1,0 +1,63 @@
+{% load static %}
+<header id="header" class="header position-relative">
+  <div class="container-fluid container-xl position-relative">
+
+    <div class="top-row d-flex align-items-center justify-content-between">
+      <a href="{% url 'home:index' %}" class="logo d-flex align-items-end">
+        <h1 class="sitename">Canaco</h1><span>.</span>
+      </a>
+
+      
+
+        <form class="search-form ms-4">
+          <input type="text" placeholder="Buscar..." class="form-control">
+          <button type="submit" class="btn"><i class="bi bi-search"></i></button>
+        </form>
+
+        <!-- Botones de Sesión -->
+        <div class="ms-3">
+          {% if request.user.is_authenticated %}
+            <div class="d-flex align-items-center gap-3">
+              <!-- Nombre de usuario con un color oscuro para que se vea bien -->
+              <span class="text-dark fw-semibold"><i class="bi bi-person-circle me-1"></i> {{ request.user.username }}</span>
+              
+              <!-- Formulario de cerrar sesión con botón ROJO (btn-danger) -->
+              <form method="post" action="{% url 'home:logout' %}" class="m-0">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger px-3 fw-semibold">Cerrar sesión</button>
+              </form>
+            </div>
+          {% else %}
+            <div class="d-flex align-items-center gap-2">
+              <a href="{% url 'home:login' %}" class="btn btn-sm btn-outline-primary fw-semibold px-3">Iniciar sesión</a>
+              <a href="{% url 'home:sign_up' %}" class="btn btn-sm btn-primary fw-semibold px-3">Registro</a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-wrap">
+    <div class="container d-flex justify-content-center position-relative">
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{% url 'home:index' %}" class="active">Inicio</a></li>
+          <li class="dropdown"><a href="#"><span>Categoría</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="{% url 'home:categoria' %}">Todas</a></li>
+              {% for cat in global_categorias %}
+                <li><a href="{% url 'home:categoria_detalle' cat.id %}">{{ cat.nombre }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+          <li><a href="{% url 'home:perfil' %}">Perfil</a></li>
+          <li><a href="{% url 'home:contactanos' %}">Contáctanos</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+  </div>
+  
+</header>

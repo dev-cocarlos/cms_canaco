@@ -1,0 +1,29 @@
+#### Requerimientos del software
+django = 5.2
+django-mysql = 4.19.0
+mysqlclient = 2.2.8
+python = 3.14.7
+mysql = 11.4.9
+
+##Comandos iniciales de ubuntu
+sudo apt upgrade -y
+
+#Instalacion de python
+sudo apt install python3-pip python3-venv python3-dev
+
+## Instalacion de libreria mysql
+sudo apt install default-libmysqlclient-dev build-essential pkg-config
+
+##instalacion del servidor web nginx
+sudo apt install nginx -y
+
+#instalacion del servidor de mysql
+    apt install mysql-server -y
+    --levantar el servicio mysql
+        systemctl start mysql
+    --Ejecutar los Scripts de seguridad
+        mysql_secure_installation
+    --Conectar el frontend de mysql, navicat, heidi, mysql workbeanch
+        -->En caso de no conectar, abrir el puerto en azure en la VM 
+            y modificar el archivo my.cnf para que deje entrar desde fuera de
+            Linux<--

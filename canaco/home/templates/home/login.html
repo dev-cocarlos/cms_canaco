@@ -1,0 +1,58 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<main class="main">
+  <section class="section">
+    <div class="container" data-aos="fade-up">
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+
+          <div class="account-page">
+            <div class="account-card account-card-sm card shadow-sm border-0 p-4 p-md-5 rounded-4">
+              <h3 class="text-center mb-4">Iniciar sesión</h3>
+
+              {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  Usuario o contraseña incorrectos.
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+              {% endif %}
+
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+
+              <form method="POST" class="profile-edit-form">
+                {% csrf_token %}
+                <div class="profile-form-row mb-3">
+                  <label for="username" class="form-label fw-semibold">Usuario</label>
+                  <input type="text" id="username" name="username" class="form-control" required>
+                </div>
+
+                <div class="profile-form-row mb-4">
+                  <label for="password" class="form-label fw-semibold">Contraseña</label>
+                  <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+
+                <div class="profile-form-actions d-flex gap-2 justify-content-center">
+                  <button type="submit" class="btn btn-primary px-4">Ingresar</button>
+                  <a href="{% url 'home:sign_up' %}" class="btn btn-outline-secondary px-4">Crear cuenta</a>
+                </div>
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock content %}
