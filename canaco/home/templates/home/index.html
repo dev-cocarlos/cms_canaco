@@ -66,6 +66,11 @@
     <div class="container section-title" data-aos="fade-up">
       <h2>Noticias recientes</h2>
       <div><span>Explora nuestras</span> <span class="description-title">Noticias recientes</span></div>
+      <div class="text-center my-5">
+        <button type="button" class="btn btn-danger px-4 py-2 text-uppercase fw-semibold shadow-sm" data-bs-toggle="modal" data-bs-target="#modalIndex">
+          Anuncios Recientes
+        </button>
+      </div>
     </div>
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -108,5 +113,39 @@
     </div>
   </section>
 
+  <!-- ================= MODAL DE ANUNCIO / BIENVENIDA ================= -->
+  <div class="modal fade" id="modalIndex" tabindex="-1" aria-labelledby="modalIndexLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-4 border-0 shadow-lg">  
+        <div class="modal-header border-bottom-0 pb-0">
+          <h5 class="modal-title fw-bold" id="modalIndexLabel">¡Bienvenido a Canaco!</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body text-center pt-3 pb-4">
+          <i class="bi bi-megaphone-fill text-danger mb-3 d-block" style="font-size: 3rem;"></i>
+          <h4 class="fw-semibold">Últimas actualizaciones</h4>
+          <p class="text-muted mb-0">
+            Explora las noticias más recientes del sector tecnológico, empresarial y más. ¡No te pierdas nuestro contenido exclusivo!
+          </p>
+        </div>
+        <div class="modal-footer border-top-0 justify-content-center pt-0 pb-4">
+          <button type="button" class="btn btn-outline-secondary px-4 fw-semibold" data-bs-dismiss="modal">Quizás luego</button>
+          <a href="{% url 'home:categoria' %}" class="btn btn-danger px-4 fw-semibold">Ver Noticias</a>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <!-- ================= FIN DEL MODAL ================= -->
+
 </main>
+
+<!-- Script para abrir el modal automáticamente al cargar el index -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var miModal = new bootstrap.Modal(document.getElementById('modalIndex'));
+      miModal.show();
+    });
+  </script>
+
 {% endblock content %}

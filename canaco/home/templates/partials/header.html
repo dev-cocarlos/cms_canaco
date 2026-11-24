@@ -9,10 +9,13 @@
 
       
 
-        <form class="search-form ms-4">
-          <input type="text" placeholder="Buscar..." class="form-control">
-          <button type="submit" class="btn"><i class="bi bi-search"></i></button>
-        </form>
+        <div class="position-relative ms-4">
+          <form class="search-form" onsubmit="return false;">
+            <input type="text" id="buscador-ajax" placeholder="Buscar..." class="form-control" autocomplete="off">
+            <button type="submit" class="btn"><i class="bi bi-search"></i></button>
+          </form>
+          <div id="resultados-busqueda" class="list-group position-absolute w-100 shadow mt-1" style="display: none; z-index: 1050;"></div>
+        </div>
 
         <!-- Botones de Sesión -->
         <div class="ms-3">
@@ -33,7 +36,6 @@
               <a href="{% url 'home:sign_up' %}" class="btn btn-sm btn-primary fw-semibold px-3">Registro</a>
             </div>
           {% endif %}
-        </div>
       </div>
     </div>
 
@@ -44,6 +46,7 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="{% url 'home:index' %}" class="active">Inicio</a></li>
+          
           <li class="dropdown"><a href="#"><span>Categoría</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="{% url 'home:categoria' %}">Todas</a></li>
@@ -52,8 +55,32 @@
               {% endfor %}
             </ul>
           </li>
-          <li><a href="{% url 'home:perfil' %}">Perfil</a></li>
+          
           <li><a href="{% url 'home:contactanos' %}">Contáctanos</a></li>
+
+          <!-- NUEVO MENÚ PARA EL CELULAR (Y ESCRITORIO) -->
+          {% if request.user.is_authenticated %}
+          <li class="dropdown"><a href="#"><span>Panel de control</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="{% url 'home:perfil' %}">Mi Perfil</a></li>
+              
+              <!-- Enlaces para Editores y Administradores -->
+              {% if request.user.is_staff %}
+                <li><a href="{% url 'home:crud_noticias' %}">Noticias</a></li>
+                <li><a href="{% url 'home:crud_comentarios' %}">Comentarios</a></li>
+                <li><a href="{% url 'home:crud_categorias' %}">Categorías</a></li>
+                
+                <!-- Enlace Exclusivo para Administradores -->
+                {% if request.user.is_superuser %}
+                  <li><a href="{% url 'home:crud_usuarios' %}">Usuarios</a></li>
+                {% endif %}
+              {% endif %}
+              
+              <li><a href="{% url 'home:crud_cambiar_contrasena' %}">Cambiar contraseña</a></li>
+            </ul>
+          </li>
+          {% endif %}
+          
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>

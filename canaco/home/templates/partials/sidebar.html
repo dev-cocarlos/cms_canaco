@@ -2,14 +2,11 @@
 {% with current=request.resolver_match.url_name %}
 <aside class="panel-sidebar flex-shrink-0">
   <ul class="nav nav-pills nav-flush flex-column mb-auto text-start">
-    
     <li class="nav-item">
       <a href="{% url 'home:perfil' %}" class="nav-link panel-nav-link {% if current == 'perfil' or current == 'crud_perfil' %}active{% endif %}">
         <span>Mi Perfil</span>
       </a>
     </li>
-
-    <!-- Solo visible para usuarios con permisos de staff (Editores/Administradores) -->
     {% if request.user.is_staff %}
       <li>
         <a href="{% url 'home:crud_noticias' %}" class="nav-link panel-nav-link {% if current == 'crud_noticias' or current == 'crear_publicacion' or current == 'editar_publicacion' %}active{% endif %}">
@@ -26,19 +23,19 @@
           <span>Categorías</span>
         </a>
       </li>
+      {% if request.user.is_superuser %}
       <li>
         <a href="{% url 'home:crud_usuarios' %}" class="nav-link panel-nav-link {% if current == 'crud_usuarios' or current == 'crear_usuario' or current == 'editar_usuario' %}active{% endif %}">
           <span>Usuarios</span>
         </a>
       </li>
+      {% endif %}
     {% endif %}
-
     <li>
       <a href="{% url 'home:crud_cambiar_contrasena' %}" class="nav-link panel-nav-link {% if current == 'crud_cambiar_contrasena' or current == 'crud_cambContra' %}active{% endif %}">
         <span>Cambiar<br>contraseña</span>
       </a>
     </li>
-    
     <li>
       <form method="post" action="{% url 'home:logout' %}" class="w-100">
         {% csrf_token %}
@@ -47,7 +44,6 @@
         </button>
       </form>
     </li>
-
   </ul>
 </aside>
 {% endwith %}

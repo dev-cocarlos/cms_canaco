@@ -3,6 +3,14 @@
 <html lang="es">
 
 <head>
+  <!-- Google Tag Manager -->
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-M2HJVTPQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  </script>
+
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>{% block title %}Canaco{% endblock %}</title>
@@ -54,6 +62,58 @@
 
   <!-- Main JS File -->
   <script src="{% static '/js/main.js' %}"></script>
+
+  <!-- ================= AVISO DE COOKIES ================= -->
+  <div id="cookieConsentBanner" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050; display: none;">
+    <div class="card shadow-lg border-0 rounded-4" style="max-width: 450px;">
+      <div class="card-body p-4">
+        
+        <h5 class="card-title fw-bold mb-3 d-flex align-items-center">
+          <i class="bi bi-shield-shaded text-primary fs-3 me-2"></i> 
+          Aviso de Privacidad y Cookies
+        </h5>
+        
+        <p class="card-text text-muted mb-4" style="font-size: 0.95rem;">
+          En <strong>Canaco Noticias</strong> utilizamos herramientas de medición (Google Analytics) para conocer qué contenidos informativos son de mayor interés y optimizar tu experiencia de lectura. Para más detalles, consulta nuestro <a href="#" class="text-primary text-decoration-none fw-semibold">Aviso de Privacidad</a>.
+        </p>
+        
+        <div class="d-flex justify-content-end gap-2">
+          <button id="btnRechazarCookies" class="btn btn-dark px-4 py-2 fw-semibold rounded-2">Rechazar</button>
+          <button id="btnAceptarCookies" class="btn btn-dark px-4 py-2 fw-semibold rounded-2">Aceptar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var cookieBanner = document.getElementById("cookieConsentBanner");
+      var btnAceptar = document.getElementById("btnAceptarCookies");
+      var btnRechazar = document.getElementById("btnRechazarCookies");
+
+      // Mostrar el aviso solo si el usuario no ha tomado una decisión previa
+      if (!localStorage.getItem("cookiesEstado")) {
+        // Un pequeño retraso para que la animación se vea natural
+        setTimeout(function() {
+          cookieBanner.style.display = "block";
+        }, 500);
+      }
+
+      // Si el usuario acepta
+      btnAceptar.addEventListener("click", function() {
+        localStorage.setItem("cookiesEstado", "aceptadas");
+        cookieBanner.style.display = "none";
+      });
+
+      // Si el usuario rechaza
+      btnRechazar.addEventListener("click", function() {
+        localStorage.setItem("cookiesEstado", "rechazadas");
+        cookieBanner.style.display = "none";
+      });
+    });
+  </script>
+  <!-- ================= FIN AVISO DE COOKIES ================= -->
 
 </body>
 </html>

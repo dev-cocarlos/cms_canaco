@@ -56,10 +56,9 @@
               </a>
             </td>
             <td>
-              <form method="post" action="{% url 'home:eliminar_publicacion' noticia.id %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-              </form>
+              <button type="button" class="btn btn-danger btn-sm btn-ajax-eliminar" data-url="{% url 'home:eliminar_publicacion' noticia.id %}">
+                Eliminar
+              </button>
             </td>
           </tr>
         {% empty %}

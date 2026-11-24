@@ -49,10 +49,9 @@
             <td>{{ categoria.createdat|date:"Y-m-d H:i" }}</td>
             <td><a href="{% url 'home:editar_categoria' categoria.id %}" class="btn btn-info btn-sm">Editar</a></td>
             <td>
-              <form method="post" action="{% url 'home:eliminar_categoria' categoria.id %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-              </form>
+              <button type="button" class="btn btn-danger btn-sm btn-ajax-eliminar" data-url="{% url 'home:eliminar_categoria' categoria.id %}">
+                Eliminar
+              </button>
             </td>
           </tr>
         {% empty %}
